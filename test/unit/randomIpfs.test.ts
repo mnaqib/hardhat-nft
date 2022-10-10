@@ -86,7 +86,9 @@ import { BigNumber } from 'ethers'
                               value: NFTMintFee,
                           })
                           const events = (await tx.wait(1)).events!
+
                           const requestId = events[1].args?.requestId
+
                           VRFCoordinatorV2Mock.fulfillRandomWords(
                               requestId,
                               randomIpfsNFT.address
