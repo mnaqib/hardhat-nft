@@ -16,6 +16,12 @@ export interface MetaDataTemplate {
     }[]
 }
 
+const dogTokenURIs = [
+    'ipfs://QmbfbVh7x3qYnRvLvKrGuaE1wv23PRTHMihet2nN7Lkyxy',
+    'ipfs://QmRLAHuaSpPgW8qbV7cMFoUeWdNvT8N4uPmZ1QguAU4zNP',
+    'ipfs://QmPULjS9vpc8iDVjy6BvC2fFhoMBWUEC3GUCH21EjeZW8f',
+]
+
 const imagesLocation = './images/randomNFTs'
 
 const func: DeployFunction = async ({
@@ -31,7 +37,9 @@ const func: DeployFunction = async ({
     const chainId = network.config.chainId as number
 
     //get the ipfs hashes
-    const tokenUris = await handleTokenURIs()
+    const tokenUris = dogTokenURIs.length
+        ? dogTokenURIs
+        : await handleTokenURIs()
 
     let vrfCoordinatorV2Address: string
     let subscriptionId: string
@@ -76,6 +84,14 @@ const func: DeployFunction = async ({
         log('Verifying............')
         verify(randomIpfsNFT.address, args)
         log('---------------------------------')
+    } else {
+        const VRFCoordinatorV2Mock: VRFCoordinatorV2Mock =
+            await ethers.getContract('VRFCoordinatorV2Mock')
+
+        await VRFCoordinatorV2Mock.addConsumer(
+            subscriptionId,
+            randomIpfsNFT.address
+        )
     }
 }
 
