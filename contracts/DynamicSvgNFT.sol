@@ -49,7 +49,7 @@ contract DynamicSvgNFT is ERC721 {
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "data:application/json;base64";
+        return "data:application/json;base64,";
     }
 
     function tokenURI(uint256 tokenId)
@@ -77,7 +77,7 @@ contract DynamicSvgNFT is ERC721 {
                                 '{"name":"',
                                 name(),
                                 '", "description": "An NFT that changes based on the chainlink Feed",',
-                                '"attributes": [{"traint_type": "coolness", "value": 100}], "image": "',
+                                '"attributes": [{"trait_type": "coolness", "value": 100}], "image": "',
                                 imageURI,
                                 '"}'
                             )
