@@ -1,6 +1,10 @@
 import { DeployFunction } from 'hardhat-deploy/dist/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { developmetChains } from '../helper-hardhat-config'
+import {
+    DECIMALS,
+    developmetChains,
+    INITIAL_ANSWER,
+} from '../helper-hardhat-config'
 import { ethers } from 'ethers'
 
 const BASE_FEE = ethers.utils.parseEther('0.25')
@@ -24,6 +28,13 @@ const func: DeployFunction = async ({
             args,
             log: true,
         })
+
+        await deploy('MockV3Aggregator', {
+            from: deployer,
+            args: [DECIMALS, INITIAL_ANSWER],
+            log: true,
+        })
+
         log('Mocks Deployed')
         log('------------------------------------------')
     }

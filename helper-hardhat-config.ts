@@ -10,6 +10,7 @@ export const networkConfig: {
         subId: string
         callbackGasLimit: string
         interval: string
+        ethUSDPriceFeed?: string
     }
 } = {
     5: {
@@ -21,6 +22,7 @@ export const networkConfig: {
         subId: '3162',
         callbackGasLimit: '500000',
         interval: '30',
+        ethUSDPriceFeed: '0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e',
     },
     31337: {
         name: 'hardhat',
