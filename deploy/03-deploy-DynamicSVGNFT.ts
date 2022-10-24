@@ -42,10 +42,10 @@ const func: DeployFunction = async ({
 
     if (!developmetChains.includes(network.name) && process.env.API_KEY) {
         log('Verifying............')
-        verify(DynamicSvgNFT.address, args)
+        await verify(DynamicSvgNFT.address, args)
         log('---------------------------------')
     }
 }
 
 export default func
-func.tags = ['all', 'dynamic']
+func.tags = ['all', 'dynamic', 'main']

@@ -29,14 +29,15 @@ const func: DeployFunction = async ({
     const mintFee = await randomIpfsNFT.getMintFee()
 
     await new Promise<void>(async (resolve, reject) => {
-        setTimeout(resolve, 30000)
-
         try {
             randomIpfsNFT.once('NFTMinted', async () => {
                 resolve()
             })
 
-            const ipfsTx = await randomIpfsNFT.requestNFT({ value: mintFee })
+            const ipfsTx = await randomIpfsNFT.requestNFT({
+                value: mintFee,
+                gasLimit: '3000000',
+            })
             const events = (await ipfsTx.wait(1)).events!
 
             if (developmetChains.includes(network.name)) {
@@ -48,7 +49,7 @@ const func: DeployFunction = async ({
             }
         } catch (error) {
             console.error(error)
-            reject(error)
+            reject()
         }
     })
 
@@ -56,14 +57,14 @@ const func: DeployFunction = async ({
         `Random IPFS NFT indfex 0 tokenURI: ${await randomIpfsNFT.tokenURI(0)}`
     )
 
-    //Dynamic NFT
+    // Dynamic NFT
     const highValue = ethers.utils.parseEther('1000')
     const dynamicSvgNFT: DynamicSvgNFT = await ethers.getContract(
         'DynamicSvgNFT',
         deployer
     )
     const dynamicTx = await dynamicSvgNFT.mintNFT(highValue)
-    await dynamicTx.wait(1)
+    const events = (await dynamicTx.wait(1)).events!
     console.log(
         `Dynamic SVG NFT index 0 tokenURI: ${await dynamicSvgNFT.tokenURI(0)}`
     )

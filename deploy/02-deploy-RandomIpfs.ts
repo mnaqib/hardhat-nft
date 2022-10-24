@@ -82,7 +82,7 @@ const func: DeployFunction = async ({
 
     if (!developmetChains.includes(network.name) && process.env.API_KEY) {
         log('Verifying............')
-        verify(randomIpfsNFT.address, args)
+        await verify(randomIpfsNFT.address, args)
         log('---------------------------------')
     } else {
         const VRFCoordinatorV2Mock: VRFCoordinatorV2Mock =
@@ -128,4 +128,4 @@ const handleTokenURIs = async () => {
 }
 
 export default func
-func.tags = ['all', 'ipfs']
+func.tags = ['all', 'ipfs', 'main']

@@ -23,10 +23,10 @@ const func: DeployFunction = async ({
 
     if (!developmetChains.includes(network.name) && process.env.API_KEY) {
         log('Verifying............')
-        verify(basicNFT.address, args)
+        await verify(basicNFT.address, args)
         log('---------------------------------')
     }
 }
 
 export default func
-func.tags = ['all', 'basic']
+func.tags = ['all', 'basic', 'main']
